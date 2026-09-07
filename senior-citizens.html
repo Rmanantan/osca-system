@@ -1,1 +1,2248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Senior Citizens | OSCA Information Management System</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 250px;
+            height: 100vh;
+
+            background: #173b57;
+            color: white;
+
+            padding: 20px 15px;
+
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+
+            margin: auto;
+            margin-bottom: 10px;
+
+            border-radius: 50%;
+
+            background: white;
+            color: #173b57;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .logo h2 {
+            font-size: 19px;
+        }
+
+        .logo p {
+            font-size: 11px;
+
+            color: #cbd8e2;
+
+            margin-top: 5px;
+
+            line-height: 1.4;
+        }
+
+        .menu-title {
+            font-size: 11px;
+
+            color: #9db4c5;
+
+            margin: 20px 10px 8px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin-bottom: 5px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 14px;
+
+            text-decoration: none;
+
+            color: #dbe7ef;
+
+            border-radius: 8px;
+
+            transition: 0.3s;
+
+            font-size: 14px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #285b7d;
+            color: white;
+        }
+
+        .menu-icon {
+            width: 22px;
+            text-align: center;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 250px;
+            padding: 25px;
+        }
+
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+            background: white;
+
+            padding: 17px 22px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .page-title h1 {
+            font-size: 24px;
+            color: #173b57;
+        }
+
+        .page-title p {
+            font-size: 13px;
+
+            color: #777;
+
+            margin-top: 4px;
+        }
+
+        .user-info {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #285b7d;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: #777;
+            margin-top: 2px;
+        }
+
+
+        /* =========================
+           STATISTICS
+        ========================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+
+            padding: 18px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.05);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .stat-card h3 {
+            font-size: 12px;
+
+            color: #777;
+
+            font-weight: normal;
+
+            margin-bottom: 6px;
+        }
+
+        .stat-card h2 {
+            color: #173b57;
+
+            font-size: 25px;
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+
+            border-radius: 9px;
+
+            background: #e8f0f5;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+        }
+
+
+        /* =========================
+           SEARCH AND FILTER
+        ========================= */
+
+        .filter-card {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.05);
+
+            margin-bottom: 20px;
+        }
+
+        .filter-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 17px;
+        }
+
+        .filter-header h3 {
+            color: #173b57;
+
+            font-size: 17px;
+        }
+
+        .filter-grid {
+            display: grid;
+
+            grid-template-columns:
+                2fr 1fr 1fr auto;
+
+            gap: 12px;
+
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 12px;
+
+            font-weight: bold;
+
+            color: #555;
+
+            margin-bottom: 6px;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 10px 11px;
+
+            border: 1px solid #ccd3da;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #285b7d;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        button {
+            border: none;
+
+            border-radius: 6px;
+
+            padding: 10px 15px;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #285b7d;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #173b57;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        .btn-add {
+            background: #285b7d;
+            color: white;
+        }
+
+
+        /* =========================
+           TABLE CARD
+        ========================= */
+
+        .table-card {
+            background: white;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.05);
+
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 18px 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            border-bottom:
+                1px solid #e5e7eb;
+        }
+
+        .table-header h3 {
+            color: #173b57;
+
+            font-size: 17px;
+        }
+
+        .record-count {
+            font-size: 12px;
+            color: #777;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 900px;
+        }
+
+        th {
+            background: #f8fafc;
+
+            color: #555;
+
+            font-size: 11px;
+
+            text-align: left;
+
+            padding: 13px 12px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+        }
+
+        td {
+            padding: 13px 12px;
+
+            font-size: 12px;
+
+            border-bottom:
+                1px solid #f0f0f0;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+        }
+
+        .status.active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status.archived {
+            background: #e5e7eb;
+            color: #4b5563;
+        }
+
+
+        /* =========================
+           ACTION BUTTONS
+        ========================= */
+
+        .actions {
+            display: flex;
+
+            gap: 5px;
+        }
+
+        .action-btn {
+            padding: 6px 8px;
+
+            font-size: 10px;
+
+            border-radius: 5px;
+        }
+
+        .view-btn {
+            background: #e0f2fe;
+            color: #075985;
+        }
+
+        .edit-btn {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .archive-btn {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+
+            z-index: 1000;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+                rgba(0,0,0,0.5);
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+
+            width: 100%;
+
+            max-width: 650px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            border-radius: 10px;
+
+            padding: 25px;
+        }
+
+        .modal-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+            padding-bottom: 15px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+        }
+
+        .modal-header h2 {
+            color: #173b57;
+
+            font-size: 19px;
+        }
+
+        .close {
+            font-size: 25px;
+
+            color: #777;
+
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+        .modal-actions {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 8px;
+
+            margin-top: 20px;
+
+            padding-top: 15px;
+
+            border-top:
+                1px solid #e5e7eb;
+        }
+
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty-state {
+            display: none;
+
+            text-align: center;
+
+            padding: 50px 20px;
+
+            color: #777;
+        }
+
+        .empty-state-icon {
+            font-size: 40px;
+
+            margin-bottom: 10px;
+        }
+
+        .empty-state h3 {
+            color: #555;
+
+            font-size: 16px;
+
+            margin-bottom: 5px;
+        }
+
+        .empty-state p {
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            color: #888;
+
+            font-size: 11px;
+
+            margin-top: 25px;
+
+            padding-bottom: 10px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .filter-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+            }
+
+            .modal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+
+                padding: 15px;
+            }
+
+            .topbar {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+            .table-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 5px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            OSCA
+        </div>
+
+        <h2>OSCA SYSTEM</h2>
+
+        <p>
+            Senior Citizen Information<br>
+            Management System
+        </p>
+
+    </div>
+
+
+    <div class="menu-title">
+        Main Menu
+    </div>
+
+
+    <ul class="menu">
+
+        <li>
+            <a href="index.html">
+                <span class="menu-icon">🏠</span>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a
+                href="senior-citizens.html"
+                class="active"
+            >
+                <span class="menu-icon">👥</span>
+                Senior Citizens
+            </a>
+        </li>
+
+        <li>
+            <a href="registration.html">
+                <span class="menu-icon">📝</span>
+                Registration
+            </a>
+        </li>
+
+        <li>
+            <a href="verification.html">
+                <span class="menu-icon">🔍</span>
+                QR Verification
+            </a>
+        </li>
+
+        <li>
+            <a href="benefits.html">
+                <span class="menu-icon">🎁</span>
+                Benefits
+            </a>
+        </li>
+
+    </ul>
+
+
+    <div class="menu-title">
+        Reports & Analytics
+    </div>
+
+
+    <ul class="menu">
+
+        <li>
+            <a href="analytics.html">
+                <span class="menu-icon">📊</span>
+                Analytics
+            </a>
+        </li>
+
+        <li>
+            <a href="reports.html">
+                <span class="menu-icon">📄</span>
+                Reports
+            </a>
+        </li>
+
+    </ul>
+
+
+    <div class="menu-title">
+        Administration
+    </div>
+
+
+    <ul class="menu">
+
+        <li>
+            <a href="users.html">
+                <span class="menu-icon">👤</span>
+                Users
+            </a>
+        </li>
+
+        <li>
+            <a href="audit-logs.html">
+                <span class="menu-icon">🔐</span>
+                Audit Logs
+            </a>
+        </li>
+
+        <li>
+            <a href="settings.html">
+                <span class="menu-icon">⚙️</span>
+                Settings
+            </a>
+        </li>
+
+        <li>
+            <a href="login.html">
+                <span class="menu-icon">🚪</span>
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div class="page-title">
+
+            <h1>
+                Senior Citizens
+            </h1>
+
+            <p>
+                Manage registered senior citizen information
+            </p>
+
+        </div>
+
+
+        <div class="user-info">
+
+            <div class="user-avatar">
+                A
+            </div>
+
+            <div>
+
+                <div class="user-name">
+                    Administrator
+                </div>
+
+                <div class="user-role">
+                    System Administrator
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         STATISTICS
+    ================================================== -->
+
+    <div class="stats">
+
+
+        <div class="stat-card">
+
+            <div>
+
+                <h3>
+                    Total Records
+                </h3>
+
+                <h2 id="totalRecords">
+                    5
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                👥
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div>
+
+                <h3>
+                    Active
+                </h3>
+
+                <h2 id="activeRecords">
+                    4
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                ✅
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div>
+
+                <h3>
+                    Pending
+                </h3>
+
+                <h2 id="pendingRecords">
+                    1
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                ⏳
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div>
+
+                <h3>
+                    60+ Population
+                </h3>
+
+                <h2 id="sixtyPlus">
+                    5
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                👴
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SEARCH AND FILTER
+    ================================================== -->
+
+    <div class="filter-card">
+
+        <div class="filter-header">
+
+            <h3>
+                Search & Filter Records
+            </h3>
+
+            <button
+                class="btn-add"
+                onclick="window.location.href='registration.html'"
+            >
+                + Register Senior Citizen
+            </button>
+
+        </div>
+
+
+        <div class="filter-grid">
+
+
+            <!-- SEARCH -->
+
+            <div class="form-group">
+
+                <label>
+                    Search
+                </label>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by name or OSCA ID..."
+                    onkeyup="filterRecords()"
+                >
+
+            </div>
+
+
+            <!-- BARANGAY -->
+
+            <div class="form-group">
+
+                <label>
+                    Barangay
+                </label>
+
+                <select
+                    id="barangayFilter"
+                    onchange="filterRecords()"
+                >
+
+                    <option value="all">
+                        All Barangays
+                    </option>
+
+                    <option value="Angio">
+                        Angio
+                    </option>
+
+                    <option value="Bolasi">
+                        Bolasi
+                    </option>
+
+                    <option value="Binday">
+                        Binday
+                    </option>
+
+                    <option value="Nibaliw">
+                        Nibaliw
+                    </option>
+
+                    <option value="Payas">
+                        Payas
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="form-group">
+
+                <label>
+                    Status
+                </label>
+
+                <select
+                    id="statusFilter"
+                    onchange="filterRecords()"
+                >
+
+                    <option value="all">
+                        All Status
+                    </option>
+
+                    <option value="Active">
+                        Active
+                    </option>
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="Archived">
+                        Archived
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- RESET -->
+
+            <button
+                class="btn-secondary"
+                onclick="resetFilters()"
+            >
+                Reset
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         TABLE
+    ================================================== -->
+
+    <div class="table-card">
+
+
+        <div class="table-header">
+
+            <h3>
+                Senior Citizen Records
+            </h3>
+
+            <span
+                class="record-count"
+                id="recordCount"
+            >
+                Showing 5 records
+            </span>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            OSCA ID
+                        </th>
+
+                        <th>
+                            Full Name
+                        </th>
+
+                        <th>
+                            Age
+                        </th>
+
+                        <th>
+                            Sex
+                        </th>
+
+                        <th>
+                            Barangay
+                        </th>
+
+                        <th>
+                            Pension
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="recordTable">
+
+
+                    <!-- RECORD 1 -->
+
+                    <tr
+                        data-name="Juan Dela Cruz"
+                        data-id="OSCA-2026-00124"
+                        data-barangay="Angio"
+                        data-status="Active"
+                    >
+
+                        <td>
+                            OSCA-2026-00124
+                        </td>
+
+                        <td>
+                            Juan Dela Cruz
+                        </td>
+
+                        <td>
+                            68
+                        </td>
+
+                        <td>
+                            Male
+                        </td>
+
+                        <td>
+                            Angio
+                        </td>
+
+                        <td>
+                            With Pension
+                        </td>
+
+                        <td>
+
+                            <span class="status active">
+                                Active
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewRecord('Juan Dela Cruz')"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editRecord('Juan Dela Cruz')"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="action-btn archive-btn"
+                                    onclick="archiveRecord(this, 'Juan Dela Cruz')"
+                                >
+                                    Archive
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <!-- RECORD 2 -->
+
+                    <tr
+                        data-name="Maria Santos"
+                        data-id="OSCA-2026-00123"
+                        data-barangay="Bolasi"
+                        data-status="Active"
+                    >
+
+                        <td>
+                            OSCA-2026-00123
+                        </td>
+
+                        <td>
+                            Maria Santos
+                        </td>
+
+                        <td>
+                            72
+                        </td>
+
+                        <td>
+                            Female
+                        </td>
+
+                        <td>
+                            Bolasi
+                        </td>
+
+                        <td>
+                            Without Pension
+                        </td>
+
+                        <td>
+
+                            <span class="status active">
+                                Active
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewRecord('Maria Santos')"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editRecord('Maria Santos')"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="action-btn archive-btn"
+                                    onclick="archiveRecord(this, 'Maria Santos')"
+                                >
+                                    Archive
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <!-- RECORD 3 -->
+
+                    <tr
+                        data-name="Pedro Garcia"
+                        data-id="OSCA-2026-00122"
+                        data-barangay="Binday"
+                        data-status="Pending"
+                    >
+
+                        <td>
+                            OSCA-2026-00122
+                        </td>
+
+                        <td>
+                            Pedro Garcia
+                        </td>
+
+                        <td>
+                            65
+                        </td>
+
+                        <td>
+                            Male
+                        </td>
+
+                        <td>
+                            Binday
+                        </td>
+
+                        <td>
+                            With Pension
+                        </td>
+
+                        <td>
+
+                            <span class="status pending">
+                                Pending
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewRecord('Pedro Garcia')"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editRecord('Pedro Garcia')"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="action-btn archive-btn"
+                                    onclick="archiveRecord(this, 'Pedro Garcia')"
+                                >
+                                    Archive
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <!-- RECORD 4 -->
+
+                    <tr
+                        data-name="Ana Mendoza"
+                        data-id="OSCA-2026-00121"
+                        data-barangay="Nibaliw"
+                        data-status="Active"
+                    >
+
+                        <td>
+                            OSCA-2026-00121
+                        </td>
+
+                        <td>
+                            Ana Mendoza
+                        </td>
+
+                        <td>
+                            70
+                        </td>
+
+                        <td>
+                            Female
+                        </td>
+
+                        <td>
+                            Nibaliw
+                        </td>
+
+                        <td>
+                            With Pension
+                        </td>
+
+                        <td>
+
+                            <span class="status active">
+                                Active
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewRecord('Ana Mendoza')"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editRecord('Ana Mendoza')"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="action-btn archive-btn"
+                                    onclick="archiveRecord(this, 'Ana Mendoza')"
+                                >
+                                    Archive
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <!-- RECORD 5 -->
+
+                    <tr
+                        data-name="Roberto Fernandez"
+                        data-id="OSCA-2026-00120"
+                        data-barangay="Payas"
+                        data-status="Active"
+                    >
+
+                        <td>
+                            OSCA-2026-00120
+                        </td>
+
+                        <td>
+                            Roberto Fernandez
+                        </td>
+
+                        <td>
+                            75
+                        </td>
+
+                        <td>
+                            Male
+                        </td>
+
+                        <td>
+                            Payas
+                        </td>
+
+                        <td>
+                            Without Pension
+                        </td>
+
+                        <td>
+
+                            <span class="status active">
+                                Active
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewRecord('Roberto Fernandez')"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editRecord('Roberto Fernandez')"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="action-btn archive-btn"
+                                    onclick="archiveRecord(this, 'Roberto Fernandez')"
+                                >
+                                    Archive
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+
+            <!-- EMPTY STATE -->
+
+            <div
+                class="empty-state"
+                id="emptyState"
+            >
+
+                <div class="empty-state-icon">
+                    🔍
+                </div>
+
+                <h3>
+                    No records found
+                </h3>
+
+                <p>
+                    Try changing your search or filter.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer>
+
+        © 2026 OSCA Senior Citizen Information Management System
+
+        <br>
+
+        Local Government Unit — San Fabian, Pangasinan
+
+    </footer>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     VIEW RECORD MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="viewModal"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>
+                Senior Citizen Information
+            </h2>
+
+            <span
+                class="close"
+                onclick="closeModal('viewModal')"
+            >
+                ×
+            </span>
+
+        </div>
+
+
+        <div class="modal-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    OSCA ID
+                </label>
+
+                <input
+                    type="text"
+                    id="viewId"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="viewName"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Age
+                </label>
+
+                <input
+                    type="text"
+                    id="viewAge"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Sex
+                </label>
+
+                <input
+                    type="text"
+                    id="viewSex"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Barangay
+                </label>
+
+                <input
+                    type="text"
+                    id="viewBarangay"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Pension Status
+                </label>
+
+                <input
+                    type="text"
+                    id="viewPension"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Registration Status
+                </label>
+
+                <input
+                    type="text"
+                    id="viewStatus"
+                    readonly
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="btn-secondary"
+                onclick="closeModal('viewModal')"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+    /* =========================
+       FILTER RECORDS
+    ========================= */
+
+    function filterRecords() {
+
+        const search =
+            document
+                .getElementById("searchInput")
+                .value
+                .toLowerCase()
+                .trim();
+
+
+        const barangay =
+            document
+                .getElementById("barangayFilter")
+                .value;
+
+
+        const status =
+            document
+                .getElementById("statusFilter")
+                .value;
+
+
+        const rows =
+            document
+                .querySelectorAll("#recordTable tr");
+
+
+        let visibleCount = 0;
+
+
+        rows.forEach(function(row) {
+
+            const name =
+                row.dataset.name.toLowerCase();
+
+
+            const id =
+                row.dataset.id.toLowerCase();
+
+
+            const rowBarangay =
+                row.dataset.barangay;
+
+
+            const rowStatus =
+                row.dataset.status;
+
+
+            const matchesSearch =
+                name.includes(search) ||
+                id.includes(search);
+
+
+            const matchesBarangay =
+                barangay === "all" ||
+                rowBarangay === barangay;
+
+
+            const matchesStatus =
+                status === "all" ||
+                rowStatus === status;
+
+
+            if (
+                matchesSearch &&
+                matchesBarangay &&
+                matchesStatus
+            ) {
+
+                row.style.display = "";
+
+                visibleCount++;
+
+            }
+
+            else {
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+
+        document
+            .getElementById("recordCount")
+            .textContent =
+            "Showing " +
+            visibleCount +
+            " records";
+
+
+        if (visibleCount === 0) {
+
+            document
+                .getElementById("emptyState")
+                .style.display = "block";
+
+        }
+
+        else {
+
+            document
+                .getElementById("emptyState")
+                .style.display = "none";
+
+        }
+
+    }
+
+
+
+    /* =========================
+       RESET FILTERS
+    ========================= */
+
+    function resetFilters() {
+
+        document
+            .getElementById("searchInput")
+            .value = "";
+
+
+        document
+            .getElementById("barangayFilter")
+            .value = "all";
+
+
+        document
+            .getElementById("statusFilter")
+            .value = "all";
+
+
+        filterRecords();
+
+    }
+
+
+
+    /* =========================
+       VIEW RECORD
+    ========================= */
+
+    function viewRecord(name) {
+
+        const rows =
+            document.querySelectorAll(
+                "#recordTable tr"
+            );
+
+
+        rows.forEach(function(row) {
+
+            if (
+                row.dataset.name === name
+            ) {
+
+                const cells =
+                    row.querySelectorAll("td");
+
+
+                document.getElementById("viewId")
+                    .value =
+                    cells[0].textContent.trim();
+
+
+                document.getElementById("viewName")
+                    .value =
+                    cells[1].textContent.trim();
+
+
+                document.getElementById("viewAge")
+                    .value =
+                    cells[2].textContent.trim();
+
+
+                document.getElementById("viewSex")
+                    .value =
+                    cells[3].textContent.trim();
+
+
+                document.getElementById("viewBarangay")
+                    .value =
+                    cells[4].textContent.trim();
+
+
+                document.getElementById("viewPension")
+                    .value =
+                    cells[5].textContent.trim();
+
+
+                document.getElementById("viewStatus")
+                    .value =
+                    cells[6].textContent.trim();
+
+
+                document.getElementById("viewModal")
+                    .style.display = "flex";
+
+            }
+
+        });
+
+    }
+
+
+
+    /* =========================
+       EDIT RECORD
+    ========================= */
+
+    function editRecord(name) {
+
+        alert(
+            "Edit function selected for:\n\n" +
+            name +
+            "\n\nThis will be connected to the database " +
+            "during backend development."
+        );
+
+    }
+
+
+
+    /* =========================
+       ARCHIVE RECORD
+    ========================= */
+
+    function archiveRecord(button, name) {
+
+        const confirmArchive =
+            confirm(
+                "Are you sure you want to archive the record of " +
+                name +
+                "?"
+            );
+
+
+        if (!confirmArchive) {
+            return;
+        }
+
+
+        const row =
+            button.closest("tr");
+
+
+        row.dataset.status =
+            "Archived";
+
+
+        const statusCell =
+            row.querySelector("td:nth-child(7)");
+
+
+        statusCell.innerHTML =
+            '<span class="status archived">Archived</span>';
+
+
+        alert(
+            name +
+            "'s record has been archived."
+        );
+
+
+        updateStatistics();
+
+        filterRecords();
+
+    }
+
+
+
+    /* =========================
+       CLOSE MODAL
+    ========================= */
+
+    function closeModal(id) {
+
+        document
+            .getElementById(id)
+            .style.display = "none";
+
+    }
+
+
+
+    /* =========================
+       UPDATE STATISTICS
+    ========================= */
+
+    function updateStatistics() {
+
+        const rows =
+            document.querySelectorAll(
+                "#recordTable tr"
+            );
+
+
+        let total = 0;
+        let active = 0;
+        let pending = 0;
+        let sixtyPlus = 0;
+
+
+        rows.forEach(function(row) {
+
+            total++;
+
+
+            const status =
+                row.dataset.status;
+
+
+            if (status === "Active") {
+                active++;
+            }
+
+
+            if (status === "Pending") {
+                pending++;
+            }
+
+
+            const age =
+                parseInt(
+                    row
+                        .querySelector("td:nth-child(3)")
+                        .textContent
+                );
+
+
+            if (age >= 60) {
+                sixtyPlus++;
+            }
+
+        });
+
+
+        document.getElementById("totalRecords")
+            .textContent = total;
+
+
+        document.getElementById("activeRecords")
+            .textContent = active;
+
+
+        document.getElementById("pendingRecords")
+            .textContent = pending;
+
+
+        document.getElementById("sixtyPlus")
+            .textContent = sixtyPlus;
+
+    }
+
+
+
+    /* =========================
+       CLOSE MODAL WHEN CLICKING
+       OUTSIDE
+    ========================= */
+
+    window.onclick = function(event) {
+
+        const modal =
+            document.getElementById("viewModal");
+
+
+        if (event.target === modal) {
+
+            modal.style.display = "none";
+
+        }
+
+    };
+
+
+    /* =========================
+       INITIALIZE
+    ========================= */
+
+    updateStatistics();
+
+    filterRecords();
+
+</script>
+
+
+</body>
+</html>
