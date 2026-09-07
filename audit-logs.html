@@ -1,1 +1,1139 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Logs | OSCA Information Management System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #173b57;
+            color: white;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .logo {
+            padding: 22px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .logo small {
+            display: block;
+            margin-top: 5px;
+            font-size: 11px;
+            font-weight: normal;
+            opacity: 0.75;
+        }
+
+        .menu {
+            padding: 15px 10px;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            color: #a9bdcc;
+            text-transform: uppercase;
+            padding: 12px 15px 8px;
+            letter-spacing: 1px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #dce8ef;
+            text-decoration: none;
+            padding: 12px 15px;
+            margin: 3px 0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .menu a:hover {
+            background: #285b7d;
+            color: white;
+        }
+
+        .menu a.active {
+            background: #285b7d;
+            color: white;
+            font-weight: bold;
+        }
+
+        .icon {
+            width: 22px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            height: 65px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+        }
+
+        .topbar h1 {
+            font-size: 21px;
+            color: #173b57;
+        }
+
+        .admin {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .admin-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #285b7d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .page-header h2 {
+            color: #173b57;
+            font-size: 24px;
+        }
+
+        .page-header p {
+            color: #777;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .refresh-btn {
+            border: none;
+            background: #285b7d;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .refresh-btn:hover {
+            background: #173b57;
+        }
+
+        /* STAT CARDS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e1e5e8;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+        }
+
+        .stat-label {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 27px;
+            font-weight: bold;
+            color: #173b57;
+        }
+
+        /* FILTER */
+        .filter-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e1e5e8;
+            margin-bottom: 20px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 14px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 6px;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccd3d9;
+            border-radius: 5px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            border-color: #285b7d;
+        }
+
+        /* TABLE */
+        .table-card {
+            background: white;
+            border: 1px solid #e1e5e8;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+        }
+
+        .table-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h3 {
+            color: #173b57;
+            font-size: 17px;
+        }
+
+        .record-count {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th {
+            background: #f7f9fb;
+            color: #555;
+            font-size: 12px;
+            text-align: left;
+            padding: 13px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+
+        tr:hover td {
+            background: #fafcfd;
+        }
+
+        .action {
+            color: #285b7d;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .action:hover {
+            text-decoration: underline;
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .login {
+            background: #e6f4ea;
+            color: #26733b;
+        }
+
+        .create {
+            background: #e6f0fa;
+            color: #245b85;
+        }
+
+        .update {
+            background: #fff4d6;
+            color: #856404;
+        }
+
+        .delete {
+            background: #fde8e8;
+            color: #a61b1b;
+        }
+
+        .verify {
+            background: #eee8ff;
+            color: #5a3c9e;
+        }
+
+        .archive {
+            background: #eceff1;
+            color: #455a64;
+        }
+
+        .logout {
+            background: #f1f1f1;
+            color: #555;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 550px;
+            background: white;
+            border-radius: 9px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            background: #173b57;
+            color: white;
+            padding: 18px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 17px;
+        }
+
+        .close {
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 22px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 17px;
+        }
+
+        .detail label {
+            display: block;
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .detail span {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .details-full {
+            grid-column: 1 / -1;
+            background: #f7f9fb;
+            padding: 14px;
+            border-radius: 6px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #888;
+            font-size: 12px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 65px;
+            }
+
+            .logo {
+                font-size: 0;
+                text-align: center;
+            }
+
+            .logo::before {
+                content: "OSCA";
+                font-size: 16px;
+            }
+
+            .logo small,
+            .menu-title,
+            .menu a span {
+                display: none;
+            }
+
+            .menu a {
+                justify-content: center;
+                padding: 13px 5px;
+            }
+
+            .main {
+                margin-left: 65px;
+            }
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .topbar h1 {
+                font-size: 17px;
+            }
+
+            .content {
+                padding: 18px;
+            }
+
+            .page-header {
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .details-full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            OSCA Information System
+            <small>LGU Senior Citizen Management</small>
+        </div>
+
+        <nav class="menu">
+
+            <div class="menu-title">Main</div>
+
+            <a href="index.html">
+                <span class="icon">▣</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="senior-citizens.html">
+                <span class="icon">♙</span>
+                <span>Senior Citizens</span>
+            </a>
+
+            <a href="registration.html">
+                <span class="icon">＋</span>
+                <span>Registration</span>
+            </a>
+
+            <a href="verification.html">
+                <span class="icon">▦</span>
+                <span>QR Verification</span>
+            </a>
+
+            <div class="menu-title">Services</div>
+
+            <a href="benefits.html">
+                <span class="icon">◆</span>
+                <span>Benefits</span>
+            </a>
+
+            <a href="analytics.html">
+                <span class="icon">▥</span>
+                <span>Analytics</span>
+            </a>
+
+            <a href="reports.html">
+                <span class="icon">▤</span>
+                <span>Reports</span>
+            </a>
+
+            <div class="menu-title">Administration</div>
+
+            <a href="user.html">
+                <span class="icon">♟</span>
+                <span>Users</span>
+            </a>
+
+            <a href="auditlog.html" class="active">
+                <span class="icon">◷</span>
+                <span>Audit Logs</span>
+            </a>
+
+            <a href="settings.html">
+                <span class="icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
+            <a href="login.html">
+                <span class="icon">⇥</span>
+                <span>Logout</span>
+            </a>
+
+        </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <h1>Audit Logs</h1>
+
+            <div class="admin">
+                <div>
+                    <strong>Administrator</strong>
+                    <br>
+                    <small>OSCA Admin</small>
+                </div>
+
+                <div class="admin-avatar">A</div>
+            </div>
+        </header>
+
+        <!-- CONTENT -->
+        <section class="content">
+
+            <div class="page-header">
+                <div>
+                    <h2>System Audit Logs</h2>
+                    <p>Monitor and track activities performed within the OSCA Information Management System.</p>
+                </div>
+
+                <button class="refresh-btn" onclick="resetFilters()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <!-- STATISTICS -->
+            <div class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-label">Total Activities</div>
+                    <div class="stat-value" id="totalActivities">0</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Today's Activities</div>
+                    <div class="stat-value" id="todayActivities">0</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Login Activities</div>
+                    <div class="stat-value" id="loginActivities">0</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Data Changes</div>
+                    <div class="stat-value" id="dataChanges">0</div>
+                </div>
+
+            </div>
+
+            <!-- FILTER -->
+            <div class="filter-card">
+
+                <div class="filter-grid">
+
+                    <div class="filter-group">
+                        <label>Search Activity</label>
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search user, activity, or record..."
+                            onkeyup="applyFilters()"
+                        >
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Action</label>
+                        <select id="actionFilter" onchange="applyFilters()">
+                            <option value="all">All Actions</option>
+                            <option value="Login">Login</option>
+                            <option value="Logout">Logout</option>
+                            <option value="Create">Create</option>
+                            <option value="Update">Update</option>
+                            <option value="Delete">Delete</option>
+                            <option value="Verify">Verify</option>
+                            <option value="Archive">Archive</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>User Role</label>
+                        <select id="roleFilter" onchange="applyFilters()">
+                            <option value="all">All Roles</option>
+                            <option value="Administrator">Administrator</option>
+                            <option value="Encoder">Encoder</option>
+                            <option value="Staff">Staff</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Date</label>
+                        <input
+                            type="date"
+                            id="dateFilter"
+                            onchange="applyFilters()"
+                        >
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TABLE -->
+            <div class="table-card">
+
+                <div class="table-header">
+                    <h3>Activity History</h3>
+                    <span class="record-count" id="recordCount">0 records</span>
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Date & Time</th>
+                                <th>User</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                                <th>Module</th>
+                                <th>Activity</th>
+                                <th>IP Address</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="auditTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer>
+            © 2026 OSCA Information Management System | Local Government Unit
+        </footer>
+
+    </main>
+
+    <!-- DETAILS MODAL -->
+    <div class="modal" id="detailsModal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3>Audit Log Details</h3>
+                <span class="close" onclick="closeModal()">×</span>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="detail-grid">
+
+                    <div class="detail">
+                        <label>Date & Time</label>
+                        <span id="modalDate"></span>
+                    </div>
+
+                    <div class="detail">
+                        <label>User</label>
+                        <span id="modalUser"></span>
+                    </div>
+
+                    <div class="detail">
+                        <label>Role</label>
+                        <span id="modalRole"></span>
+                    </div>
+
+                    <div class="detail">
+                        <label>Action</label>
+                        <span id="modalAction"></span>
+                    </div>
+
+                    <div class="detail">
+                        <label>Module</label>
+                        <span id="modalModule"></span>
+                    </div>
+
+                    <div class="detail">
+                        <label>IP Address</label>
+                        <span id="modalIP"></span>
+                    </div>
+
+                    <div class="details-full">
+                        <div class="detail">
+                            <label>Activity Details</label>
+                            <span id="modalDetails"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /*
+         * SAMPLE AUDIT LOG DATA
+         * Replace this array later with data from your database/API.
+         */
+
+        const auditLogs = [
+
+            {
+                date: "2026-09-07 09:42 AM",
+                user: "Juan Admin",
+                role: "Administrator",
+                action: "Login",
+                module: "Authentication",
+                activity: "Administrator logged into the system.",
+                ip: "192.168.1.10"
+            },
+
+            {
+                date: "2026-09-07 09:35 AM",
+                user: "Maria Encoder",
+                role: "Encoder",
+                action: "Create",
+                module: "Registration",
+                activity: "Registered senior citizen Juan Dela Cruz.",
+                ip: "192.168.1.15"
+            },
+
+            {
+                date: "2026-09-07 09:20 AM",
+                user: "Maria Encoder",
+                role: "Encoder",
+                action: "Update",
+                module: "Senior Citizens",
+                activity: "Updated senior citizen information for Maria Santos.",
+                ip: "192.168.1.15"
+            },
+
+            {
+                date: "2026-09-07 08:55 AM",
+                user: "Pedro Staff",
+                role: "Staff",
+                action: "Verify",
+                module: "QR Verification",
+                activity: "Verified OSCA ID OSCA-2026-00122.",
+                ip: "192.168.1.18"
+            },
+
+            {
+                date: "2026-09-06 04:30 PM",
+                user: "Juan Admin",
+                role: "Administrator",
+                action: "Update",
+                module: "Settings",
+                activity: "Updated system configuration.",
+                ip: "192.168.1.10"
+            },
+
+            {
+                date: "2026-09-06 03:15 PM",
+                user: "Maria Encoder",
+                role: "Encoder",
+                action: "Create",
+                module: "Benefits",
+                activity: "Recorded benefit distribution for Ana Mendoza.",
+                ip: "192.168.1.15"
+            },
+
+            {
+                date: "2026-09-06 02:45 PM",
+                user: "Pedro Staff",
+                role: "Staff",
+                action: "Archive",
+                module: "Senior Citizens",
+                activity: "Archived inactive senior citizen record.",
+                ip: "192.168.1.18"
+            },
+
+            {
+                date: "2026-09-06 01:25 PM",
+                user: "Juan Admin",
+                role: "Administrator",
+                action: "Delete",
+                module: "Users",
+                activity: "Removed inactive system user account.",
+                ip: "192.168.1.10"
+            },
+
+            {
+                date: "2026-09-06 12:10 PM",
+                user: "Maria Encoder",
+                role: "Encoder",
+                action: "Login",
+                module: "Authentication",
+                activity: "Encoder logged into the system.",
+                ip: "192.168.1.15"
+            },
+
+            {
+                date: "2026-09-05 05:05 PM",
+                user: "Maria Encoder",
+                role: "Encoder",
+                action: "Logout",
+                module: "Authentication",
+                activity: "Encoder logged out of the system.",
+                ip: "192.168.1.15"
+            }
+
+        ];
+
+        let filteredLogs = [...auditLogs];
+
+        /* DISPLAY TABLE */
+
+        function displayLogs(logs) {
+
+            const table = document.getElementById("auditTable");
+
+            table.innerHTML = "";
+
+            logs.forEach((log, index) => {
+
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${log.date}</td>
+                    <td><strong>${log.user}</strong></td>
+                    <td>${log.role}</td>
+                    <td>
+                        <span class="badge ${getActionClass(log.action)}">
+                            ${log.action}
+                        </span>
+                    </td>
+                    <td>${log.module}</td>
+                    <td>${log.activity}</td>
+                    <td>${log.ip}</td>
+                    <td>
+                        <button class="action" onclick="viewDetails(${auditLogs.indexOf(log)})">
+                            View
+                        </button>
+                    </td>
+                `;
+
+                table.appendChild(row);
+
+            });
+
+            document.getElementById("recordCount").textContent =
+                logs.length + (logs.length === 1 ? " record" : " records");
+
+            updateStatistics(logs);
+        }
+
+        /* ACTION BADGE */
+
+        function getActionClass(action) {
+
+            switch (action) {
+
+                case "Login":
+                    return "login";
+
+                case "Logout":
+                    return "logout";
+
+                case "Create":
+                    return "create";
+
+                case "Update":
+                    return "update";
+
+                case "Delete":
+                    return "delete";
+
+                case "Verify":
+                    return "verify";
+
+                case "Archive":
+                    return "archive";
+
+                default:
+                    return "";
+            }
+        }
+
+        /* FILTER */
+
+        function applyFilters() {
+
+            const search =
+                document.getElementById("searchInput").value.toLowerCase();
+
+            const action =
+                document.getElementById("actionFilter").value;
+
+            const role =
+                document.getElementById("roleFilter").value;
+
+            const date =
+                document.getElementById("dateFilter").value;
+
+            filteredLogs = auditLogs.filter(log => {
+
+                const searchableText =
+                    (
+                        log.user +
+                        " " +
+                        log.activity +
+                        " " +
+                        log.module +
+                        " " +
+                        log.ip
+                    ).toLowerCase();
+
+                const logDate = log.date.substring(0, 10);
+
+                const matchesSearch =
+                    searchableText.includes(search);
+
+                const matchesAction =
+                    action === "all" ||
+                    log.action === action;
+
+                const matchesRole =
+                    role === "all" ||
+                    log.role === role;
+
+                const matchesDate =
+                    date === "" ||
+                    logDate === date;
+
+                return (
+                    matchesSearch &&
+                    matchesAction &&
+                    matchesRole &&
+                    matchesDate
+                );
+
+            });
+
+            displayLogs(filteredLogs);
+        }
+
+        /* STATISTICS */
+
+        function updateStatistics(logs) {
+
+            document.getElementById("totalActivities").textContent =
+                logs.length;
+
+            const today = "2026-09-07";
+
+            const todayCount = logs.filter(log =>
+                log.date.startsWith(today)
+            ).length;
+
+            document.getElementById("todayActivities").textContent =
+                todayCount;
+
+            const loginCount = logs.filter(log =>
+                log.action === "Login"
+            ).length;
+
+            document.getElementById("loginActivities").textContent =
+                loginCount;
+
+            const dataChanges = logs.filter(log =>
+                ["Create", "Update", "Delete", "Archive"].includes(log.action)
+            ).length;
+
+            document.getElementById("dataChanges").textContent =
+                dataChanges;
+        }
+
+        /* VIEW DETAILS */
+
+        function viewDetails(index) {
+
+            const log = auditLogs[index];
+
+            if (!log) return;
+
+            document.getElementById("modalDate").textContent =
+                log.date;
+
+            document.getElementById("modalUser").textContent =
+                log.user;
+
+            document.getElementById("modalRole").textContent =
+                log.role;
+
+            document.getElementById("modalAction").textContent =
+                log.action;
+
+            document.getElementById("modalModule").textContent =
+                log.module;
+
+            document.getElementById("modalIP").textContent =
+                log.ip;
+
+            document.getElementById("modalDetails").textContent =
+                log.activity;
+
+            document.getElementById("detailsModal").style.display =
+                "flex";
+        }
+
+        /* CLOSE MODAL */
+
+        function closeModal() {
+
+            document.getElementById("detailsModal").style.display =
+                "none";
+        }
+
+        /* RESET */
+
+        function resetFilters() {
+
+            document.getElementById("searchInput").value = "";
+            document.getElementById("actionFilter").value = "all";
+            document.getElementById("roleFilter").value = "all";
+            document.getElementById("dateFilter").value = "";
+
+            filteredLogs = [...auditLogs];
+
+            displayLogs(filteredLogs);
+        }
+
+        /* CLOSE WHEN CLICKING OUTSIDE */
+
+        window.onclick = function(event) {
+
+            const modal =
+                document.getElementById("detailsModal");
+
+            if (event.target === modal) {
+                closeModal();
+            }
+
+        };
+
+        /* INITIAL DISPLAY */
+
+        displayLogs(auditLogs);
+
+    </script>
+
+</body>
+</html>
+```
 
