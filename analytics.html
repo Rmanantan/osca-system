@@ -1,1 +1,1806 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics | OSCA Information Management System</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #173b57;
+            color: white;
+            padding: 20px 15px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            margin: auto;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            background: white;
+            color: #173b57;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .logo h2 {
+            font-size: 19px;
+        }
+
+        .logo p {
+            font-size: 11px;
+            color: #cbd8e2;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            color: #9db4c5;
+            margin: 20px 10px 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin-bottom: 5px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            text-decoration: none;
+            color: #dbe7ef;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #285b7d;
+            color: white;
+        }
+
+        .menu-icon {
+            width: 22px;
+            text-align: center;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 250px;
+            padding: 25px;
+        }
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+            background: white;
+            padding: 17px 22px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .page-title h1 {
+            font-size: 24px;
+            color: #173b57;
+        }
+
+        .page-title p {
+            font-size: 13px;
+            color: #777;
+            margin-top: 4px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #285b7d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: #777;
+            margin-top: 2px;
+        }
+
+        /* =========================
+           FILTER BAR
+        ========================= */
+
+        .filter-card {
+            background: white;
+            padding: 18px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .filter-header h3 {
+            color: #173b57;
+            font-size: 17px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 6px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px 11px;
+            border: 1px solid #ccd3da;
+            border-radius: 6px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: #285b7d;
+        }
+
+        button {
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #285b7d;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #173b57;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* =========================
+           STATISTICS
+        ========================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 18px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-card h3 {
+            font-size: 12px;
+            color: #777;
+            font-weight: normal;
+            margin-bottom: 6px;
+        }
+
+        .stat-card h2 {
+            color: #173b57;
+            font-size: 25px;
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 9px;
+            background: #e8f0f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        /* =========================
+           ANALYTICS GRID
+        ========================= */
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .analytics-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .card-header h3 {
+            color: #173b57;
+            font-size: 17px;
+        }
+
+        .card-header p {
+            color: #888;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* =========================
+           BAR CHART
+        ========================= */
+
+        .chart-row {
+            display: grid;
+            grid-template-columns: 90px 1fr 45px;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .chart-label {
+            font-size: 12px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .bar-background {
+            height: 20px;
+            background: #edf1f4;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bar {
+            height: 100%;
+            background: #285b7d;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+
+        .chart-value {
+            font-size: 12px;
+            font-weight: bold;
+            color: #173b57;
+            text-align: right;
+        }
+
+        /* =========================
+           PIE-STYLE STATUS
+        ========================= */
+
+        .status-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 35px;
+            padding: 10px;
+        }
+
+        .donut {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background:
+                conic-gradient(
+                    #285b7d 0deg 288deg,
+                    #d9e2e8 288deg 360deg
+                );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .donut-inner {
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .donut-inner strong {
+            font-size: 25px;
+            color: #173b57;
+        }
+
+        .donut-inner span {
+            font-size: 10px;
+            color: #777;
+        }
+
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .legend-box {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .legend-active {
+            background: #285b7d;
+        }
+
+        .legend-inactive {
+            background: #d9e2e8;
+        }
+
+        /* =========================
+           GENDER CARDS
+        ========================= */
+
+        .gender-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .gender-card {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .gender-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .gender-card h4 {
+            color: #173b57;
+            font-size: 14px;
+        }
+
+        .gender-card h2 {
+            color: #285b7d;
+            font-size: 28px;
+            margin-top: 5px;
+        }
+
+        .gender-card p {
+            color: #888;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        /* =========================
+           SUMMARY TABLE
+        ========================= */
+
+        .summary-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .summary-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .summary-header h3 {
+            color: #173b57;
+            font-size: 17px;
+        }
+
+        .summary-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #555;
+            font-size: 11px;
+            text-align: left;
+            padding: 13px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        td {
+            padding: 13px 15px;
+            font-size: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        .percentage {
+            font-weight: bold;
+            color: #285b7d;
+        }
+
+        /* =========================
+           INSIGHT BOX
+        ========================= */
+
+        .insight-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .insight-card h3 {
+            color: #173b57;
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+
+        .insight-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .insight {
+            border-left: 4px solid #285b7d;
+            background: #f8fafc;
+            padding: 14px;
+            border-radius: 5px;
+        }
+
+        .insight h4 {
+            color: #173b57;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .insight p {
+            color: #777;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+            color: #888;
+            font-size: 11px;
+            margin-top: 25px;
+            padding-bottom: 10px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .insight-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .status-container {
+                flex-direction: column;
+            }
+
+            .gender-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            OSCA
+        </div>
+
+        <h2>OSCA SYSTEM</h2>
+
+        <p>
+            Senior Citizen Information<br>
+            Management System
+        </p>
+
+    </div>
+
+    <div class="menu-title">
+        Main Menu
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <a href="index.html">
+                <span class="menu-icon">🏠</span>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="senior-citizens.html">
+                <span class="menu-icon">👥</span>
+                Senior Citizens
+            </a>
+        </li>
+
+        <li>
+            <a href="registration.html">
+                <span class="menu-icon">📝</span>
+                Registration
+            </a>
+        </li>
+
+        <li>
+            <a href="verification.html">
+                <span class="menu-icon">🔍</span>
+                QR Verification
+            </a>
+        </li>
+
+        <li>
+            <a href="benefits.html">
+                <span class="menu-icon">🎁</span>
+                Benefits
+            </a>
+        </li>
+
+    </ul>
+
+    <div class="menu-title">
+        Reports & Analytics
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <a href="analytics.html" class="active">
+                <span class="menu-icon">📊</span>
+                Analytics
+            </a>
+        </li>
+
+        <li>
+            <a href="reports.html">
+                <span class="menu-icon">📄</span>
+                Reports
+            </a>
+        </li>
+
+    </ul>
+
+    <div class="menu-title">
+        Administration
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <a href="user.html">
+                <span class="menu-icon">👤</span>
+                Users
+            </a>
+        </li>
+
+        <li>
+            <a href="audit-logs.html">
+                <span class="menu-icon">🔐</span>
+                Audit Logs
+            </a>
+        </li>
+
+        <li>
+            <a href="settings.html">
+                <span class="menu-icon">⚙️</span>
+                Settings
+            </a>
+        </li>
+
+        <li>
+            <a href="login.html">
+                <span class="menu-icon">🚪</span>
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</aside>
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main">
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div class="page-title">
+
+            <h1>
+                Analytics
+            </h1>
+
+            <p>
+                Data-driven insights on registered senior citizens
+            </p>
+
+        </div>
+
+        <div class="user-info">
+
+            <div class="user-avatar">
+                A
+            </div>
+
+            <div>
+
+                <div class="user-name">
+                    Administrator
+                </div>
+
+                <div class="user-role">
+                    System Administrator
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =================================================
+         FILTER
+    ================================================== -->
+
+    <div class="filter-card">
+
+        <div class="filter-header">
+
+            <h3>
+                Analytics Filters
+            </h3>
+
+            <button
+                class="btn-primary"
+                onclick="refreshAnalytics()"
+            >
+                🔄 Refresh Data
+            </button>
+
+        </div>
+
+        <div class="filter-grid">
+
+            <div class="form-group">
+
+                <label>
+                    Barangay
+                </label>
+
+                <select
+                    id="barangayFilter"
+                    onchange="updateAnalytics()"
+                >
+
+                    <option value="all">
+                        All Barangays
+                    </option>
+
+                    <option value="Angio">
+                        Angio
+                    </option>
+
+                    <option value="Bolasi">
+                        Bolasi
+                    </option>
+
+                    <option value="Binday">
+                        Binday
+                    </option>
+
+                    <option value="Nibaliw">
+                        Nibaliw
+                    </option>
+
+                    <option value="Payas">
+                        Payas
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Reporting Period
+                </label>
+
+                <select
+                    id="periodFilter"
+                    onchange="updateAnalytics()"
+                >
+
+                    <option value="2026">
+                        Year 2026
+                    </option>
+
+                    <option value="2025">
+                        Year 2025
+                    </option>
+
+                    <option value="2024">
+                        Year 2024
+                    </option>
+
+                </select>
+
+            </div>
+
+            <button
+                class="btn-secondary"
+                onclick="resetAnalytics()"
+            >
+                Reset
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =================================================
+         STATISTICS
+    ================================================== -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <div>
+
+                <h3>
+                    Total Senior Citizens
+                </h3>
+
+                <h2 id="totalCount">
+                    5
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                👥
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div>
+
+                <h3>
+                    Average Age
+                </h3>
+
+                <h2 id="averageAge">
+                    70
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                🎂
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div>
+
+                <h3>
+                    With Pension
+                </h3>
+
+                <h2 id="pensionCount">
+                    3
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                💰
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div>
+
+                <h3>
+                    Without Pension
+                </h3>
+
+                <h2 id="noPensionCount">
+                    2
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                📋
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =================================================
+         ANALYTICS CARDS
+    ================================================== -->
+
+    <div class="analytics-grid">
+
+        <!-- BARANGAY DISTRIBUTION -->
+
+        <div class="analytics-card">
+
+            <div class="card-header">
+
+                <h3>
+                    Senior Citizens by Barangay
+                </h3>
+
+                <p>
+                    Distribution of registered senior citizens
+                </p>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="chart-row">
+
+                    <div class="chart-label">
+                        Angio
+                    </div>
+
+                    <div class="bar-background">
+                        <div
+                            class="bar"
+                            style="width:20%"
+                        ></div>
+                    </div>
+
+                    <div class="chart-value">
+                        1
+                    </div>
+
+                </div>
+
+                <div class="chart-row">
+
+                    <div class="chart-label">
+                        Bolasi
+                    </div>
+
+                    <div class="bar-background">
+                        <div
+                            class="bar"
+                            style="width:20%"
+                        ></div>
+                    </div>
+
+                    <div class="chart-value">
+                        1
+                    </div>
+
+                </div>
+
+                <div class="chart-row">
+
+                    <div class="chart-label">
+                        Binday
+                    </div>
+
+                    <div class="bar-background">
+                        <div
+                            class="bar"
+                            style="width:20%"
+                        ></div>
+                    </div>
+
+                    <div class="chart-value">
+                        1
+                    </div>
+
+                </div>
+
+                <div class="chart-row">
+
+                    <div class="chart-label">
+                        Nibaliw
+                    </div>
+
+                    <div class="bar-background">
+                        <div
+                            class="bar"
+                            style="width:20%"
+                        ></div>
+                    </div>
+
+                    <div class="chart-value">
+                        1
+                    </div>
+
+                </div>
+
+                <div class="chart-row">
+
+                    <div class="chart-label">
+                        Payas
+                    </div>
+
+                    <div class="bar-background">
+                        <div
+                            class="bar"
+                            style="width:20%"
+                        ></div>
+                    </div>
+
+                    <div class="chart-value">
+                        1
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- REGISTRATION STATUS -->
+
+        <div class="analytics-card">
+
+            <div class="card-header">
+
+                <h3>
+                    Registration Status
+                </h3>
+
+                <p>
+                    Current status of senior citizen records
+                </p>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="status-container">
+
+                    <div class="donut" id="statusDonut">
+
+                        <div class="donut-inner">
+
+                            <strong id="activePercentage">
+                                80%
+                            </strong>
+
+                            <span>
+                                Active
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="legend">
+
+                        <div class="legend-item">
+
+                            <span
+                                class="legend-box legend-active"
+                            ></span>
+
+                            Active
+                            <strong id="activeLegend">
+                                4
+                            </strong>
+
+                        </div>
+
+                        <div class="legend-item">
+
+                            <span
+                                class="legend-box legend-inactive"
+                            ></span>
+
+                            Pending
+                            <strong id="pendingLegend">
+                                1
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =================================================
+         GENDER DISTRIBUTION
+    ================================================== -->
+
+    <div class="analytics-card" style="margin-bottom:20px;">
+
+        <div class="card-header">
+
+            <h3>
+                Gender Distribution
+            </h3>
+
+            <p>
+                Registered senior citizens by sex
+            </p>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="gender-grid">
+
+                <div class="gender-card">
+
+                    <div class="gender-icon">
+                        👨
+                    </div>
+
+                    <h4>
+                        Male
+                    </h4>
+
+                    <h2 id="maleCount">
+                        3
+                    </h2>
+
+                    <p>
+                        Senior Citizens
+                    </p>
+
+                </div>
+
+                <div class="gender-card">
+
+                    <div class="gender-icon">
+                        👩
+                    </div>
+
+                    <h4>
+                        Female
+                    </h4>
+
+                    <h2 id="femaleCount">
+                        2
+                    </h2>
+
+                    <p>
+                        Senior Citizens
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =================================================
+         BARANGAY SUMMARY
+    ================================================== -->
+
+    <div class="summary-card">
+
+        <div class="summary-header">
+
+            <h3>
+                Barangay Analytics Summary
+            </h3>
+
+        </div>
+
+        <div class="summary-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Barangay
+                        </th>
+
+                        <th>
+                            Total Registered
+                        </th>
+
+                        <th>
+                            Male
+                        </th>
+
+                        <th>
+                            Female
+                        </th>
+
+                        <th>
+                            With Pension
+                        </th>
+
+                        <th>
+                            Percentage
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            Angio
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            0
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td class="percentage">
+                            20%
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Bolasi
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            0
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            0
+                        </td>
+
+                        <td class="percentage">
+                            20%
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Binday
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            0
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td class="percentage">
+                            20%
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Nibaliw
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            0
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td class="percentage">
+                            20%
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Payas
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            0
+                        </td>
+
+                        <td>
+                            0
+                        </td>
+
+                        <td class="percentage">
+                            20%
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- =================================================
+         KEY INSIGHTS
+    ================================================== -->
+
+    <div class="insight-card">
+
+        <h3>
+            Key Insights
+        </h3>
+
+        <div class="insight-list">
+
+            <div class="insight">
+
+                <h4>
+                    👥 Population
+                </h4>
+
+                <p>
+                    There are currently
+                    <strong>5 registered senior citizens</strong>
+                    in the sample records across the listed barangays.
+                </p>
+
+            </div>
+
+            <div class="insight">
+
+                <h4>
+                    💰 Pension Coverage
+                </h4>
+
+                <p>
+                    <strong>3 senior citizens</strong>
+                    are recorded as having a pension, while
+                    2 are recorded without a pension.
+                </p>
+
+            </div>
+
+            <div class="insight">
+
+                <h4>
+                    📊 Registration
+                </h4>
+
+                <p>
+                    Most sample records are currently
+                    <strong>Active</strong>, while one record
+                    remains Pending.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer>
+
+        © 2026 OSCA Senior Citizen Information Management System
+
+        <br>
+
+        Local Government Unit — San Fabian, Pangasinan
+
+    </footer>
+
+</main>
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    /*
+        Sample analytics data.
+
+        This is currently frontend/sample data.
+        It can later be replaced with database/API data.
+    */
+
+    const seniorCitizens = [
+
+        {
+            name: "Juan Dela Cruz",
+            age: 68,
+            sex: "Male",
+            barangay: "Angio",
+            pension: "With Pension",
+            status: "Active"
+        },
+
+        {
+            name: "Maria Santos",
+            age: 72,
+            sex: "Female",
+            barangay: "Bolasi",
+            pension: "Without Pension",
+            status: "Active"
+        },
+
+        {
+            name: "Pedro Garcia",
+            age: 65,
+            sex: "Male",
+            barangay: "Binday",
+            pension: "With Pension",
+            status: "Pending"
+        },
+
+        {
+            name: "Ana Mendoza",
+            age: 70,
+            sex: "Female",
+            barangay: "Nibaliw",
+            pension: "With Pension",
+            status: "Active"
+        },
+
+        {
+            name: "Roberto Fernandez",
+            age: 75,
+            sex: "Male",
+            barangay: "Payas",
+            pension: "Without Pension",
+            status: "Active"
+        }
+
+    ];
+
+
+    /* =========================
+       UPDATE ANALYTICS
+    ========================= */
+
+    function updateAnalytics() {
+
+        const barangay =
+            document.getElementById("barangayFilter").value;
+
+        let data = seniorCitizens;
+
+        if (barangay !== "all") {
+
+            data =
+                seniorCitizens.filter(
+                    person =>
+                    person.barangay === barangay
+                );
+
+        }
+
+        const total = data.length;
+
+        let ageTotal = 0;
+        let pension = 0;
+        let noPension = 0;
+        let male = 0;
+        let female = 0;
+        let active = 0;
+        let pending = 0;
+
+        data.forEach(function(person) {
+
+            ageTotal += person.age;
+
+            if (person.pension === "With Pension") {
+                pension++;
+            }
+
+            if (person.pension === "Without Pension") {
+                noPension++;
+            }
+
+            if (person.sex === "Male") {
+                male++;
+            }
+
+            if (person.sex === "Female") {
+                female++;
+            }
+
+            if (person.status === "Active") {
+                active++;
+            }
+
+            if (person.status === "Pending") {
+                pending++;
+            }
+
+        });
+
+        const average =
+            total > 0
+            ? Math.round(ageTotal / total)
+            : 0;
+
+        document.getElementById("totalCount")
+            .textContent = total;
+
+        document.getElementById("averageAge")
+            .textContent = average;
+
+        document.getElementById("pensionCount")
+            .textContent = pension;
+
+        document.getElementById("noPensionCount")
+            .textContent = noPension;
+
+        document.getElementById("maleCount")
+            .textContent = male;
+
+        document.getElementById("femaleCount")
+            .textContent = female;
+
+        document.getElementById("activeLegend")
+            .textContent = active;
+
+        document.getElementById("pendingLegend")
+            .textContent = pending;
+
+        let activePercentage =
+            total > 0
+            ? Math.round((active / total) * 100)
+            : 0;
+
+        document.getElementById("activePercentage")
+            .textContent =
+            activePercentage + "%";
+
+        updateDonut(activePercentage);
+
+    }
+
+
+    /* =========================
+       DONUT CHART
+    ========================= */
+
+    function updateDonut(percentage) {
+
+        const donut =
+            document.getElementById("statusDonut");
+
+        const activeDegrees =
+            percentage * 3.6;
+
+        donut.style.background =
+            `conic-gradient(
+                #285b7d 0deg ${activeDegrees}deg,
+                #d9e2e8 ${activeDegrees}deg 360deg
+            )`;
+
+    }
+
+
+    /* =========================
+       REFRESH ANALYTICS
+    ========================= */
+
+    function refreshAnalytics() {
+
+        updateAnalytics();
+
+        alert(
+            "Analytics data has been refreshed."
+        );
+
+    }
+
+
+    /* =========================
+       RESET
+    ========================= */
+
+    function resetAnalytics() {
+
+        document.getElementById("barangayFilter")
+            .value = "all";
+
+        document.getElementById("periodFilter")
+            .value = "2026";
+
+        updateAnalytics();
+
+    }
+
+
+    /* =========================
+       INITIALIZE
+    ========================= */
+
+    updateAnalytics();
+
+</script>
+
+</body>
+</html>
+```
 
