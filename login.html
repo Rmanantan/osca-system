@@ -1,1 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Login | OSCA Information Management System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f4f6f9;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        /* =========================
+           LOGIN CONTAINER
+        ========================= */
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* =========================
+           LOGO
+        ========================= */
+
+        .logo-section {
+            text-align: center;
+
+            margin-bottom: 28px;
+        }
+
+        .logo {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 15px;
+
+            border-radius: 50%;
+
+            background: #173b57;
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+
+            font-weight: bold;
+        }
+
+        .logo-section h1 {
+            color: #173b57;
+
+            font-size: 22px;
+
+            margin-bottom: 6px;
+        }
+
+        .logo-section p {
+            color: #777;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #444;
+
+            margin-bottom: 7px;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            border: 1px solid #ccd3da;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #285b7d;
+
+            box-shadow:
+                0 0 0 2px rgba(40, 91, 125, 0.08);
+        }
+
+
+        /* =========================
+           PASSWORD
+        ========================= */
+
+        .password-input {
+            padding-right: 75px;
+        }
+
+        .show-password {
+            position: absolute;
+
+            right: 10px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color: #285b7d;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .show-password:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           REMEMBER ME
+        ========================= */
+
+        .options {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 22px;
+        }
+
+        .remember {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            font-size: 12px;
+
+            color: #555;
+        }
+
+        .remember input {
+            width: auto;
+
+            cursor: pointer;
+        }
+
+        .forgot {
+            color: #285b7d;
+
+            font-size: 12px;
+
+            text-decoration: none;
+        }
+
+        .forgot:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           LOGIN BUTTON
+        ========================= */
+
+        .login-button {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #285b7d;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .login-button:hover {
+            background: #173b57;
+        }
+
+
+        /* =========================
+           ERROR MESSAGE
+        ========================= */
+
+        .error-message {
+            display: none;
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border: 1px solid #fecaca;
+
+            padding: 11px;
+
+            border-radius: 6px;
+
+            font-size: 12px;
+
+            margin-bottom: 18px;
+
+            text-align: center;
+        }
+
+
+        /* =========================
+           DEMO ACCOUNT
+        ========================= */
+
+        .demo-account {
+            margin-top: 22px;
+
+            padding: 12px;
+
+            background: #f4f6f9;
+
+            border-radius: 7px;
+
+            text-align: center;
+
+            font-size: 11px;
+
+            color: #666;
+        }
+
+        .demo-account strong {
+            color: #173b57;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            text-align: center;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #eee;
+
+            font-size: 10px;
+
+            color: #999;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 480px) {
+
+            .login-container {
+                padding: 25px 20px;
+            }
+
+            .logo-section h1 {
+                font-size: 20px;
+            }
+
+            .options {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN CONTAINER
+===================================================== -->
+
+<div class="login-container">
+
+
+    <!-- LOGO -->
+
+    <div class="logo-section">
+
+        <div class="logo">
+            OSCA
+        </div>
+
+        <h1>
+            OSCA Information System
+        </h1>
+
+        <p>
+            Senior Citizen Information Management System
+            <br>
+            Local Government Unit — San Fabian, Pangasinan
+        </p>
+
+    </div>
+
+
+
+    <!-- ERROR MESSAGE -->
+
+    <div
+        id="errorMessage"
+        class="error-message"
+    >
+        Invalid username or password.
+    </div>
+
+
+
+    <!-- LOGIN FORM -->
+
+    <form id="loginForm">
+
+
+        <!-- USERNAME -->
+
+        <div class="form-group">
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your username"
+                autocomplete="username"
+                required
+            >
+
+        </div>
+
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <div class="input-container">
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="password-input"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="show-password"
+                    id="showPassword"
+                    onclick="togglePassword()"
+                >
+                    Show
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- OPTIONS -->
+
+        <div class="options">
+
+            <label class="remember">
+
+                <input
+                    type="checkbox"
+                    id="remember"
+                >
+
+                Remember me
+
+            </label>
+
+
+            <a
+                href="#"
+                class="forgot"
+                onclick="forgotPassword()"
+            >
+                Forgot password?
+            </a>
+
+        </div>
+
+
+
+        <!-- LOGIN BUTTON -->
+
+        <button
+            type="submit"
+            class="login-button"
+        >
+            Login
+        </button>
+
+
+    </form>
+
+
+
+    <!-- DEMO ACCOUNT -->
+
+    <div class="demo-account">
+
+        <strong>Prototype Login</strong>
+
+        <br><br>
+
+        Username:
+        <strong>admin</strong>
+
+        <br>
+
+        Password:
+        <strong>admin123</strong>
+
+    </div>
+
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        © 2026 OSCA Senior Citizen Information Management System
+
+        <br>
+
+        For authorized OSCA personnel only.
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+    /*
+       ==============================
+       DEMO LOGIN CREDENTIALS
+       ==============================
+
+       These credentials are only for
+       the HTML prototype.
+
+       DO NOT use this method for
+       the production thesis system.
+    */
+
+    const DEMO_USERNAME = "admin";
+
+    const DEMO_PASSWORD = "admin123";
+
+
+
+    /*
+       ==============================
+       LOGIN FORM
+       ==============================
+    */
+
+    document
+        .getElementById("loginForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            const username =
+                document
+                    .getElementById("username")
+                    .value
+                    .trim();
+
+
+            const password =
+                document
+                    .getElementById("password")
+                    .value;
+
+
+            const errorMessage =
+                document.getElementById("errorMessage");
+
+
+            /*
+               Check credentials
+            */
+
+            if (
+                username === DEMO_USERNAME &&
+                password === DEMO_PASSWORD
+            ) {
+
+                /*
+                   Save login status
+                   for prototype purposes
+                */
+
+                sessionStorage.setItem(
+                    "oscaLoggedIn",
+                    "true"
+                );
+
+
+                sessionStorage.setItem(
+                    "oscaUsername",
+                    username
+                );
+
+
+                /*
+                   Redirect to dashboard
+                */
+
+                window.location.href =
+                    "index.html";
+
+            }
+
+            else {
+
+                /*
+                   Show error
+                */
+
+                errorMessage.style.display =
+                    "block";
+
+
+                /*
+                   Clear password
+                */
+
+                document
+                    .getElementById("password")
+                    .value = "";
+
+            }
+
+        });
+
+
+
+    /*
+       ==============================
+       SHOW / HIDE PASSWORD
+       ==============================
+    */
+
+    function togglePassword() {
+
+        const password =
+            document.getElementById("password");
+
+        const button =
+            document.getElementById("showPassword");
+
+
+        if (
+            password.type === "password"
+        ) {
+
+            password.type = "text";
+
+            button.textContent =
+                "Hide";
+
+        }
+
+        else {
+
+            password.type = "password";
+
+            button.textContent =
+                "Show";
+
+        }
+
+    }
+
+
+
+    /*
+       ==============================
+       FORGOT PASSWORD
+       ==============================
+    */
+
+    function forgotPassword() {
+
+        alert(
+            "Password recovery will be available " +
+            "when the system is connected to the backend."
+        );
+
+    }
+
+
+
+    /*
+       ==============================
+       HIDE ERROR WHEN USER TYPES
+       ==============================
+    */
+
+    document
+        .getElementById("username")
+        .addEventListener("input", function() {
+
+            document
+                .getElementById("errorMessage")
+                .style.display = "none";
+
+        });
+
+
+    document
+        .getElementById("password")
+        .addEventListener("input", function() {
+
+            document
+                .getElementById("errorMessage")
+                .style.display = "none";
+
+        });
+
+
+</script>
+
+
+</body>
+</html>
