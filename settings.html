@@ -1,1 +1,1912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Settings | OSCA System</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #1e3a5f;
+            color: white;
+            padding: 20px 15px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 10px 5px 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .logo-circle {
+            width: 60px;
+            height: 60px;
+            margin: auto;
+            border-radius: 50%;
+            background: #2563eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .logo h2 {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .logo p {
+            margin-top: 5px;
+            font-size: 11px;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        .menu {
+            margin-top: 25px;
+        }
+
+        .menu-title {
+            font-size: 10px;
+            color: #94a3b8;
+            margin: 15px 12px 8px;
+            text-transform: uppercase;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: #dbeafe;
+            text-decoration: none;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            margin-bottom: 4px;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .menu-icon {
+            width: 22px;
+            text-align: center;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 250px;
+            padding: 25px;
+        }
+
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+            background: white;
+
+            min-height: 75px;
+
+            padding: 15px 22px;
+
+            border-radius: 12px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .page-title h1 {
+            font-size: 24px;
+        }
+
+        .page-title p {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            background: #dbeafe;
+
+            color: #2563eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+        .user-info strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .user-info small {
+            color: #64748b;
+            font-size: 11px;
+        }
+
+
+        /* =========================
+           SETTINGS LAYOUT
+        ========================= */
+
+        .settings-layout {
+            display: grid;
+
+            grid-template-columns: 220px 1fr;
+
+            gap: 20px;
+        }
+
+
+        /* =========================
+           SETTINGS MENU
+        ========================= */
+
+        .settings-menu {
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 12px;
+
+            height: fit-content;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .settings-menu button {
+            width: 100%;
+
+            text-align: left;
+
+            border: none;
+
+            background: transparent;
+
+            padding: 12px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            color: #475569;
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+        }
+
+        .settings-menu button:hover,
+        .settings-menu button.active {
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           SETTINGS CONTENT
+        ========================= */
+
+        .settings-content {
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .settings-section {
+            display: none;
+        }
+
+        .settings-section.active {
+            display: block;
+        }
+
+        .section-header {
+            border-bottom: 1px solid #e2e8f0;
+
+            padding-bottom: 15px;
+
+            margin-bottom: 22px;
+        }
+
+        .section-header h2 {
+            font-size: 19px;
+        }
+
+        .section-header p {
+            color: #64748b;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 5px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / 3;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+
+            color: #334155;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+
+            padding: 11px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 7px;
+
+            outline: none;
+
+            font-size: 13px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+
+            min-height: 90px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .button-row {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .btn {
+            padding: 11px 18px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+
+            color: #334155;
+        }
+
+        .btn-danger {
+            background: #fee2e2;
+
+            color: #991b1b;
+        }
+
+
+        /* =========================
+           TOGGLE
+        ========================= */
+
+        .setting-item {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .setting-info h3 {
+            font-size: 14px;
+
+            margin-bottom: 4px;
+        }
+
+        .setting-info p {
+            font-size: 11px;
+
+            color: #64748b;
+        }
+
+        .switch {
+            position: relative;
+
+            width: 45px;
+
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+
+            width: 0;
+
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+
+            cursor: pointer;
+
+            inset: 0;
+
+            background: #cbd5e1;
+
+            border-radius: 20px;
+
+            transition: 0.3s;
+        }
+
+        .slider:before {
+            content: "";
+
+            position: absolute;
+
+            height: 18px;
+
+            width: 18px;
+
+            left: 3px;
+
+            bottom: 3px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            transition: 0.3s;
+        }
+
+        .switch input:checked + .slider {
+            background: #2563eb;
+        }
+
+        .switch input:checked + .slider:before {
+            transform: translateX(21px);
+        }
+
+
+        /* =========================
+           SECURITY BOX
+        ========================= */
+
+        .security-box {
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            padding: 18px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+        }
+
+        .security-box h3 {
+            font-size: 14px;
+
+            margin-bottom: 6px;
+        }
+
+        .security-box p {
+            color: #64748b;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           BACKUP
+        ========================= */
+
+        .backup-card {
+            border: 1px solid #e2e8f0;
+
+            border-radius: 8px;
+
+            padding: 18px;
+
+            margin-bottom: 15px;
+        }
+
+        .backup-card h3 {
+            font-size: 14px;
+
+            margin-bottom: 5px;
+        }
+
+        .backup-card p {
+            font-size: 12px;
+
+            color: #64748b;
+
+            margin-bottom: 15px;
+        }
+
+        .backup-status {
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border-radius: 12px;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            font-size: 11px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           DANGER ZONE
+        ========================= */
+
+        .danger-zone {
+            border: 1px solid #fecaca;
+
+            background: #fff7f7;
+
+            border-radius: 8px;
+
+            padding: 18px;
+
+            margin-top: 25px;
+        }
+
+        .danger-zone h3 {
+            color: #991b1b;
+
+            font-size: 15px;
+
+            margin-bottom: 6px;
+        }
+
+        .danger-zone p {
+            color: #7f1d1d;
+
+            font-size: 12px;
+
+            margin-bottom: 15px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .settings-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-menu {
+                display: flex;
+
+                overflow-x: auto;
+
+                gap: 5px;
+            }
+
+            .settings-menu button {
+                min-width: 150px;
+
+                white-space: nowrap;
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                width: 70px;
+
+                padding: 10px;
+            }
+
+            .logo h2,
+            .logo p,
+            .menu-title,
+            .menu a span {
+                display: none;
+            }
+
+            .logo-circle {
+                width: 45px;
+
+                height: 45px;
+
+                font-size: 11px;
+            }
+
+            .menu a {
+                justify-content: center;
+
+                padding: 13px 5px;
+            }
+
+            .main {
+                margin-left: 70px;
+
+                padding: 15px;
+            }
+
+            .user-info {
+                display: none;
+            }
+
+            .page-title h1 {
+                font-size: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: 1;
+            }
+
+            .settings-content {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     SIDEBAR
+================================================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-circle">
+            OSCA
+        </div>
+
+        <h2>
+            OSCA System
+        </h2>
+
+        <p>
+            Senior Citizen Information Management
+        </p>
+
+    </div>
+
+
+    <nav class="menu">
+
+        <div class="menu-title">
+            Main
+        </div>
+
+        <a href="index.html">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="senior-citizens.html">
+            <span class="menu-icon">👴</span>
+            <span>Senior Citizens</span>
+        </a>
+
+        <a href="registration.html">
+            <span class="menu-icon">📝</span>
+            <span>Registration</span>
+        </a>
+
+        <a href="verification.html">
+            <span class="menu-icon">🔳</span>
+            <span>QR Verification</span>
+        </a>
+
+
+        <div class="menu-title">
+            Management
+        </div>
+
+        <a href="benefits.html">
+            <span class="menu-icon">🎁</span>
+            <span>Benefits</span>
+        </a>
+
+        <a href="analytics.html">
+            <span class="menu-icon">📊</span>
+            <span>Analytics</span>
+        </a>
+
+        <a href="reports.html">
+            <span class="menu-icon">📄</span>
+            <span>Reports</span>
+        </a>
+
+
+        <div class="menu-title">
+            Administration
+        </div>
+
+        <a href="users.html">
+            <span class="menu-icon">👥</span>
+            <span>Users</span>
+        </a>
+
+        <a href="audit-logs.html">
+            <span class="menu-icon">🔐</span>
+            <span>Audit Logs</span>
+        </a>
+
+        <a
+            href="settings.html"
+            class="active"
+        >
+            <span class="menu-icon">⚙️</span>
+            <span>Settings</span>
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- ==================================================
+     MAIN
+================================================== -->
+
+<main class="main">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div class="page-title">
+
+            <h1>
+                Settings
+            </h1>
+
+            <p>
+                Manage system configuration and account preferences
+            </p>
+
+        </div>
+
+
+        <div class="user">
+
+            <div class="user-icon">
+                A
+            </div>
+
+            <div class="user-info">
+
+                <strong>
+                    Administrator
+                </strong>
+
+                <small>
+                    OSCA Staff
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         SETTINGS LAYOUT
+    ================================================== -->
+
+    <div class="settings-layout">
+
+
+        <!-- SETTINGS MENU -->
+
+        <div class="settings-menu">
+
+            <button
+                class="active"
+                onclick="showSection('general', this)"
+            >
+                ⚙️ General
+            </button>
+
+            <button
+                onclick="showSection('account', this)"
+            >
+                👤 Account
+            </button>
+
+            <button
+                onclick="showSection('security', this)"
+            >
+                🔐 Security
+            </button>
+
+            <button
+                onclick="showSection('notifications', this)"
+            >
+                🔔 Notifications
+            </button>
+
+            <button
+                onclick="showSection('backup', this)"
+            >
+                💾 Backup
+            </button>
+
+        </div>
+
+
+        <!-- SETTINGS CONTENT -->
+
+        <div class="settings-content">
+
+
+            <!-- ==================================================
+                 GENERAL
+            ================================================== -->
+
+            <section
+                id="general"
+                class="settings-section active"
+            >
+
+                <div class="section-header">
+
+                    <h2>
+                        General Settings
+                    </h2>
+
+                    <p>
+                        Configure basic information for the OSCA system.
+                    </p>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            System Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="systemName"
+                            value="OSCA Senior Citizen Information Management System"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Office
+                        </label>
+
+                        <input
+                            type="text"
+                            id="officeName"
+                            value="Office for Senior Citizens Affairs"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Municipality
+                        </label>
+
+                        <input
+                            type="text"
+                            id="municipality"
+                            value="San Fabian"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Province
+                        </label>
+
+                        <input
+                            type="text"
+                            id="province"
+                            value="Pangasinan"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Time Zone
+                        </label>
+
+                        <select id="timezone">
+
+                            <option selected>
+                                Asia/Manila
+                            </option>
+
+                            <option>
+                                Asia/Singapore
+                            </option>
+
+                            <option>
+                                UTC
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Records Per Page
+                        </label>
+
+                        <select id="recordsPerPage">
+
+                            <option>
+                                10
+                            </option>
+
+                            <option selected>
+                                25
+                            </option>
+
+                            <option>
+                                50
+                            </option>
+
+                            <option>
+                                100
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>
+                            System Description
+                        </label>
+
+                        <textarea id="description">A web-based Senior Citizen Information Management System designed to support OSCA record management, verification, benefits management, analytics, and reporting.</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="saveSettings('General settings')"
+                    >
+                        Save Changes
+                    </button>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="resetGeneral()"
+                    >
+                        Reset
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==================================================
+                 ACCOUNT
+            ================================================== -->
+
+            <section
+                id="account"
+                class="settings-section"
+            >
+
+                <div class="section-header">
+
+                    <h2>
+                        Account Settings
+                    </h2>
+
+                    <p>
+                        Update your administrator account information.
+                    </p>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            First Name
+                        </label>
+
+                        <input
+                            type="text"
+                            value="System"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Last Name
+                        </label>
+
+                        <input
+                            type="text"
+                            value="Administrator"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            value="admin"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Role
+                        </label>
+
+                        <input
+                            type="text"
+                            value="Administrator"
+                            disabled
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            placeholder="Enter email address"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="saveSettings('Account information')"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==================================================
+                 SECURITY
+            ================================================== -->
+
+            <section
+                id="security"
+                class="settings-section"
+            >
+
+                <div class="section-header">
+
+                    <h2>
+                        Security Settings
+                    </h2>
+
+                    <p>
+                        Configure account security and access controls.
+                    </p>
+
+                </div>
+
+
+                <div class="security-box">
+
+                    <h3>
+                        Change Password
+                    </h3>
+
+                    <p>
+                        Use a strong password to protect the OSCA system.
+                    </p>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group full">
+
+                        <label>
+                            Current Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="currentPassword"
+                            placeholder="Enter current password"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            New Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="newPassword"
+                            placeholder="Enter new password"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Confirm New Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirm new password"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-info">
+
+                        <h3>
+                            Session Timeout
+                        </h3>
+
+                        <p>
+                            Automatically log out inactive users.
+                        </p>
+
+                    </div>
+
+                    <select
+                        style="padding:8px;border:1px solid #cbd5e1;border-radius:6px;"
+                    >
+
+                        <option>
+                            15 minutes
+                        </option>
+
+                        <option selected>
+                            30 minutes
+                        </option>
+
+                        <option>
+                            60 minutes
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-info">
+
+                        <h3>
+                            Login Activity Logging
+                        </h3>
+
+                        <p>
+                            Record successful and failed login attempts.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-info">
+
+                        <h3>
+                            Two-Factor Authentication
+                        </h3>
+
+                        <p>
+                            Add an additional authentication layer.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="changePassword()"
+                    >
+                        Update Security
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==================================================
+                 NOTIFICATIONS
+            ================================================== -->
+
+            <section
+                id="notifications"
+                class="settings-section"
+            >
+
+                <div class="section-header">
+
+                    <h2>
+                        Notification Settings
+                    </h2>
+
+                    <p>
+                        Control system notifications and alerts.
+                    </p>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-info">
+
+                        <h3>
+                            New Registration
+                        </h3>
+
+                        <p>
+                            Receive notifications when a new senior citizen is registered.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-info">
+
+                        <h3>
+                            Benefit Claims
+                        </h3>
+
+                        <p>
+                            Receive alerts for new benefit claims.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-info">
+
+                        <h3>
+                            System Alerts
+                        </h3>
+
+                        <p>
+                            Receive important system notifications.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-info">
+
+                        <h3>
+                            Backup Notifications
+                        </h3>
+
+                        <p>
+                            Receive notifications about database backups.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="saveSettings('Notification settings')"
+                    >
+                        Save Notifications
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==================================================
+                 BACKUP
+            ================================================== -->
+
+            <section
+                id="backup"
+                class="settings-section"
+            >
+
+                <div class="section-header">
+
+                    <h2>
+                        Backup & Recovery
+                    </h2>
+
+                    <p>
+                        Manage database backup and recovery settings.
+                    </p>
+
+                </div>
+
+
+                <div class="backup-card">
+
+                    <h3>
+                        Database Status
+                    </h3>
+
+                    <p>
+                        Current database connection status.
+                    </p>
+
+                    <span class="backup-status">
+                        ● Connected
+                    </span>
+
+                </div>
+
+
+                <div class="backup-card">
+
+                    <h3>
+                        Last Backup
+                    </h3>
+
+                    <p id="lastBackup">
+
+                        No backup has been performed in this prototype.
+
+                    </p>
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="createBackup()"
+                    >
+                        Create Backup
+                    </button>
+
+                </div>
+
+
+                <div class="backup-card">
+
+                    <h3>
+                        Automatic Backup
+                    </h3>
+
+                    <p>
+                        Automatically create database backups on a scheduled basis.
+                    </p>
+
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="backup-card">
+
+                    <h3>
+                        Backup Frequency
+                    </h3>
+
+                    <p>
+                        Select how frequently the system should perform backups.
+                    </p>
+
+                    <select
+                        style="padding:10px;width:200px;border:1px solid #cbd5e1;border-radius:6px;"
+                    >
+
+                        <option>
+                            Daily
+                        </option>
+
+                        <option selected>
+                            Weekly
+                        </option>
+
+                        <option>
+                            Monthly
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- DANGER ZONE -->
+
+                <div class="danger-zone">
+
+                    <h3>
+                        ⚠️ Danger Zone
+                    </h3>
+
+                    <p>
+                        These actions can affect system data.
+                        Use them carefully.
+                    </p>
+
+                    <button
+                        class="btn btn-danger"
+                        onclick="clearDemoData()"
+                    >
+                        Clear Demo Data
+                    </button>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+
+    /* ==========================================
+       CHANGE SETTINGS SECTION
+    ========================================== */
+
+    function showSection(sectionId, button) {
+
+        const sections =
+            document.querySelectorAll(
+                ".settings-section"
+            );
+
+        sections.forEach(function(section) {
+
+            section.classList.remove("active");
+
+        });
+
+
+        const buttons =
+            document.querySelectorAll(
+                ".settings-menu button"
+            );
+
+        buttons.forEach(function(btn) {
+
+            btn.classList.remove("active");
+
+        });
+
+
+        document
+            .getElementById(sectionId)
+            .classList.add("active");
+
+
+        button.classList.add("active");
+
+    }
+
+
+    /* ==========================================
+       SAVE SETTINGS
+    ========================================== */
+
+    function saveSettings(settingName) {
+
+        alert(
+            settingName +
+            " have been saved successfully."
+        );
+
+    }
+
+
+    /* ==========================================
+       RESET GENERAL SETTINGS
+    ========================================== */
+
+    function resetGeneral() {
+
+        document.getElementById(
+            "systemName"
+        ).value =
+            "OSCA Senior Citizen Information Management System";
+
+
+        document.getElementById(
+            "officeName"
+        ).value =
+            "Office for Senior Citizens Affairs";
+
+
+        document.getElementById(
+            "municipality"
+        ).value =
+            "San Fabian";
+
+
+        document.getElementById(
+            "province"
+        ).value =
+            "Pangasinan";
+
+
+        document.getElementById(
+            "timezone"
+        ).value =
+            "Asia/Manila";
+
+
+        document.getElementById(
+            "recordsPerPage"
+        ).value =
+            "25";
+
+
+        alert(
+            "General settings have been reset."
+        );
+
+    }
+
+
+    /* ==========================================
+       CHANGE PASSWORD
+    ========================================== */
+
+    function changePassword() {
+
+        const newPassword =
+            document.getElementById(
+                "newPassword"
+            ).value;
+
+
+        const confirmPassword =
+            document.getElementById(
+                "confirmPassword"
+            ).value;
+
+
+        if (
+            newPassword === "" ||
+            confirmPassword === ""
+        ) {
+
+            alert(
+                "Please enter your new password."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            newPassword !== confirmPassword
+        ) {
+
+            alert(
+                "New password and confirmation do not match."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            newPassword.length < 8
+        ) {
+
+            alert(
+                "Password should contain at least 8 characters."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Password validation successful. " +
+            "Backend authentication will process the actual password change."
+        );
+
+
+        document.getElementById(
+            "currentPassword"
+        ).value = "";
+
+
+        document.getElementById(
+            "newPassword"
+        ).value = "";
+
+
+        document.getElementById(
+            "confirmPassword"
+        ).value = "";
+
+    }
+
+
+    /* ==========================================
+       CREATE BACKUP
+    ========================================== */
+
+    function createBackup() {
+
+        const confirmation =
+            confirm(
+                "Create a database backup now?"
+            );
+
+
+        if (!confirmation) {
+            return;
+        }
+
+
+        const now =
+            new Date();
+
+
+        document.getElementById(
+            "lastBackup"
+        ).textContent =
+            "Backup created on " +
+            now.toLocaleString();
+
+
+        alert(
+            "Backup request completed in prototype mode."
+        );
+
+    }
+
+
+    /* ==========================================
+       CLEAR DEMO DATA
+    ========================================== */
+
+    function clearDemoData() {
+
+        const confirmation =
+            confirm(
+                "WARNING: This will clear demonstration data. Continue?"
+            );
+
+
+        if (confirmation) {
+
+            alert(
+                "Demo data clearing is disabled in this prototype."
+            );
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+</html>
