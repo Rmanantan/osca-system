@@ -1,0 +1,174 @@
+OSCA SENIOR CITIZEN INFORMATION MANAGEMENT SYSTEM
+How the System Works
+
+SYSTEM FLOW
+
+OSCA Staff
+    ↓
+LOGIN
+    ↓
+DASHBOARD
+    ↓
+Senior Citizen Registration
+Record Management
+QR Verification
+Benefits Management
+Analytics & Reports
+User Management
+Audit Logs
+    ↓
+DATABASE (MySQL)
+    ↓
+ANALYTICS / REPORTS
+
+
+1. LOGIN
+
+The OSCA administrator or staff member logs into the system.
+
+The system checks:
+- Username
+- Password
+- User role/permission
+
+Administrator:
+Can manage users, records, settings, reports, and other administrative functions.
+
+OSCA Staff:
+Can manage senior citizen records, benefits, verification, and reports according to assigned permissions.
+
+
+2. SENIOR CITIZEN REGISTRATION
+
+The staff enters the senior citizen's information, such as:
+- Full name
+- Birthdate
+- Age
+- Sex
+- Address
+- Barangay
+- Pension status
+- Other required OSCA information
+
+The system validates the information and saves the record to the MySQL database.
+
+
+3. RECORD MANAGEMENT
+
+After registration, records can be:
+
+Create → View → Edit → Search → Filter → Archive
+
+Example:
+
+Juan Dela Cruz
+OSCA ID: OSCA-2026-00124
+Age: 68
+Barangay: Angio
+Status: Active
+
+Instead of searching through paper records, OSCA staff can search and manage records through the database.
+
+
+4. QR VERIFICATION
+
+The system generates a QR code associated with the senior citizen's OSCA record.
+
+Verification flow:
+
+Scan QR
+    ↓
+System finds record
+    ↓
+Check OSCA information
+    ↓
+Display verification result
+
+This helps OSCA staff verify the senior citizen's record during transactions.
+
+
+5. BENEFITS MANAGEMENT
+
+When a senior citizen receives a benefit, the staff records the transaction.
+
+Process:
+
+Senior Citizen
+    ↓
+Check Eligibility
+    ↓
+Claim Benefit
+    ↓
+Save Transaction
+    ↓
+Benefit History
+
+The system can also help detect duplicate claims based on the configured system rules.
+
+
+6. ANALYTICS
+
+The records stored in the database are processed into useful information.
+
+Examples:
+- Number of senior citizens
+- Age distribution
+- Senior citizens per barangay
+- Pension status
+- Benefit utilization
+
+The dashboard presents this information through statistics and charts, helping OSCA make data-driven decisions.
+
+
+7. REPORTS
+
+The system can generate reports from stored data.
+
+Examples:
+- Number of senior citizens per barangay
+- Age distribution
+- Pension status
+- Benefit utilization
+- Registration statistics
+
+These reports can support OSCA planning and decision-making.
+
+
+8. AUDIT LOGS
+
+Important system actions are recorded.
+
+Example:
+
+Administrator or Staff logs in
+    ↓
+Staff edits a senior citizen record
+    ↓
+System records:
+Who + What + When
+
+This provides accountability and helps monitor system activity.
+
+
+9. DATABASE AND TECHNOLOGY
+
+The HTML/CSS pages provide the user interface (front end).
+
+The planned system architecture is:
+
+HTML/CSS
+    ↓
+JavaScript
+    ↓
+Laravel/PHP
+    ↓
+MySQL Database
+
+The current HTML pages are front-end prototypes. Laravel/PHP and MySQL will later provide the actual authentication, processing, database storage, and other back-end functions.
+
+
+OVERALL SYSTEM PURPOSE
+
+The system collects and manages senior citizen records, supports QR-based verification, manages benefits, analyzes stored data, generates reports, and maintains audit logs.
+
+Its purpose is to help OSCA manage senior citizen information more efficiently, improve record retrieval and verification, support benefit administration, and provide data for decision-making.
