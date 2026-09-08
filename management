@@ -1,1 +1,22 @@
-
+osca-system/
+│
+├── index.html
+├── login.html
+├── senior-citizens.html
+├── registration.html
+├── verification.html
+├── benefits.html
+├── analytics.html
+├── reports.html
+├── users.html
+├── audit-logs.html
+├── settings.html
+│
+├── css/
+│   └── style.css
+│
+├── js/
+│   └── script.js
+│
+└── images/
+    └── logo.png
